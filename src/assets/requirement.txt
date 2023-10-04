@@ -1,0 +1,11 @@
+%pip install xgboost
+%pip install streamlit
+%pip install pandas
+%pip install python-dotenv
+%pip install seaborn
+%pip install matplotlib
+%pip install pyodbc
+%pip install numpy
+%pip install xlrd
+%pip install openpyxl
+%pip install scikit-learn
