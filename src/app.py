@@ -27,10 +27,8 @@ img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert from BGR to RGB
 st.image(img, channels='RGB')
 
 
-def main():
     st.sidebar.title('Navigation')
     page = st.sidebar.radio('Select a Page', ['Home', 'Predict', 'Explore', 'About'])
-
     if page == 'Home':
         home()
     elif page == 'Predict':
@@ -60,7 +58,6 @@ def home():
         </style>
     """, unsafe_allow_html=True)
 
-    set_css()
 
     st.title("Welcome to Favorita Sales Prediction App")
     st.write("""
