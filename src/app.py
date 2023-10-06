@@ -3,7 +3,8 @@ import pandas as pd
 import pickle
 from PIL import Image
 import cv2
-import base64
+import time
+
 
 # Define a function to load the pickle file
 def load_pickle(filepath):
@@ -18,19 +19,47 @@ scaler = data_dict["scaler"]
 model = data_dict["model"]
 
 
+def main():
 
+    # Setup web page
+    st.set_page_config(
 
-img = cv2.imread(r'C:\Users\USER\Desktop\streamlit_app\fund.-of-streamlit\background_hp.jpg')
-# Rotate the image 90 degrees clockwise
-img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
-img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert from BGR to RGB
-st.image(img, channels='RGB')
+     page_title="Favorita Sales Prediction App",
+     #page_icon=('nav_pg.jpg'),
+     layout="wide",
+     menu_items={
+         'About': "The source code for this application can be accessed on GitHub https://github.com/florenceaffoh/fund.-of-streamlit.git"
+     }
+)
+    st.markdown("""
+    <style type="text/css">
+    blockquote {
+        margin: 1em 0px 1em -1px;
+        padding: 0px 0px 0px 1.2em;
+        font-size: 20px;
+        border-left: 5px solid rgb(230, 234, 241);
+        # background-color: rgb(129, 164, 182);
+    }
+    blockquote p {
+        font-size: 30px;
+        color: #FFFFFF;
+    }
+    [data-testid=stSidebar] {
+        background-color: rgb(129, 164, 182);
+        color: #FFFFFF;
+    }
+    [aria-selected="true"] {
+         color: #000000;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
-
-    st.sidebar.title('Navigation')
+    st.sidebar.title("**Favorita Sales Prediction App**")
+    st.sidebar.write('## Navigation')
+    st.sidebar.markdown("Made by TEAM CHARLESTON")
     page = st.sidebar.radio('Select a Page', ['Home', 'Predict', 'Explore', 'About'])
     if page == 'Home':
-        home()
+         home()
     elif page == 'Predict':
         predict_sales()
     elif page == 'Explore':
@@ -40,27 +69,15 @@ st.image(img, channels='RGB')
 
 def home():
 
-    def img_to_base64(img_path):
-        with open(img_path, "rb") as img_file:
-            return base64.b64encode(img_file.read()).decode('utf-8')
-
-    def set_css():
-         img_data_uri = "data:image/jpg;base64," + img_to_base64('C:/Users/USER/Desktop/streamlit_app/fund.-of-streamlit/background_hp.jpg')
-         st.markdown(f"""
-        <style>
-        body {{
-        background-image: url("{img_data_uri}");
-        background-size: cover;
-        background-position: center;
-        background-blend-mode: multiply;
-        background-color: rgba(0,0,0,0.5);  /* adding the tint: in this case, a semi-transparent black */
-        }} 
-        </style>
-    """, unsafe_allow_html=True)
+        img = cv2.imread(r'C:\Users\USER\Desktop\streamlit_app\retail.jpg')
+    # Rotate the image 90 degrees clockwise
+        #img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)  # Convert from BGR to RGB
+        st.image(img, channels='RGB')
 
 
-    st.title("Welcome to Favorita Sales Prediction App")
-    st.write("""
+        st.title("Welcome to Favorita Sales Prediction App")
+        st.write("""
 ### To ensure the best of **Experience** on the Favorita Sales Prediction App,
 Navigate using the sidebar(the arrow in the top left corner) to:
 1. Predict sales
@@ -111,10 +128,14 @@ def predict_sales():
 
                 # Display predicted sales
                 st.balloons()
-                st.write(f"The Predicted Sales is: ${predictions[0]}")
+                st.progress(10)
+                with st.spinner('Wait for it...'):    
+                    time.sleep(10)
+
+                st.success(f"The Predicted Sales is: ${predictions[0]}", icon="✅")
 
             except:
-                st.write(f"Something went wrong during the Sales Prediction")
+                st.error(f"Something went wrong during the Sales Prediction", icon="🚨")
 
 def explore_data():
     st.title("Explore Data")
@@ -122,12 +143,14 @@ def explore_data():
     st.write(df)
 
 def about_info():
+    #st.image("nav_pg.jpg")
     st.title("About")
     st.write("""## FAVORITA SALES PREDICTION APP
              
 Beyond the bustling aisles and checkout lanes of grocery stores, there lies a complex web of purchasing patterns,
 seasonal trends, and intricate sales dynamics. Understanding and predicting these dynamics can be the key to a retailer's success or downfall.
 For Corporation Favorita, one of Ecuador's largest grocery retailers, these patterns translate to thousands of items across multiple store locations.
+
 With the rise of data science and advanced analytical techniques,time series forecasting has emerged as an invaluable tool for businesses like Favorita.
 We embarked on a journey to harness the power of time series forecasting,
 aiming to craft a robust predictive model that can more accurately 
