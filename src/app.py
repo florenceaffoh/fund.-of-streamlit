@@ -6,13 +6,14 @@ import cv2
 import time
 
 
+
 # Define a function to load the pickle file
 def load_pickle(filepath):
     with open(filepath, "rb") as file:
         return pickle.load(file)
 
 # Call the function to load your pickle file
-data_dict = load_pickle("fund.-of-streamlit\src\streamlit_Basics.pkl")
+data_dict = load_pickle("src/streamlit_Basics.pkl")
 
 # Now, you can access the components you saved in the dictionary.
 scaler = data_dict["scaler"]
